@@ -133,30 +133,42 @@
 		//looking for the vertex of lowest distance which hasn't yet been
 		//processed, and using that to update the distance information in the
 		//graph
+
 		var verticesToCheck = new PriorityQueue();
-		verticesToCheck.add(0, start);
 		var hasBeenQueued = {};
-		hasBeenQueued[start] = true;
+		var processVertex = function(vertex, distance) {
+			var edges = vertex.getEdges();
+			for(var i = 0; i < edges.length; i++) {
+				var newVert = edges[i].getDest();
+				var newDist = distance + edges[i].getWeight();
+				if(hasBeenQueued[newVert])
+					try { // try block needed in case newVert was removed
+						verticesToCheck.decreaseKey(newVert, newDist);
+					} catch(e) {}
+				else {
+					verticesToCheck.add(newDist, newVert);
+					hasBeenQueued[newVert] = true;
+				}
+			}
+		}
+
+		//Normally you start of Dijkstra's algorthm by putting the starting
+		//vertex in with priority 0.  However, because we don't want to
+		//simply return an answer of 0 if the start and end vertices are the
+		//same, instead we are going to put in the neighborhood of the
+		//starting vertex with priorities equal to the corresponding edge
+		//weights.  Essentially, we are doing the rolling out the first
+		//iteration of the loop.
+		processVertex(start, 0);
+
 		var queueElem;
 		while((queueElem = verticesToCheck.extractMin()) != null) {
 			var distance = queueElem.key;
 			var vertex = queueElem.value;
 			if(vertex == end)
 				return distance;
-			else {
-				//Update distances of adjacent vertices
-				var edges = vertex.getEdges();
-				for(var i = 0; i < edges.length; i++) {
-					var newVert = edges[i].getDest();
-					var newDist = distance + edges[i].getWeight();
-					if(hasBeenQueued[newVert])
-						try { // try block needed in case newVert was removed
-							verticesToCheck.decreaseKey(newVert, newDist);
-						} catch(e) {}
-					else
-						verticesToCheck.add(newDist, newVert);
-				}
-			}
+			else
+				processVertex(vertex, distance);
 		}
 		return null;
 	};
@@ -187,9 +199,10 @@
 		var pathCounts = [];
 		for(var thisLen = 0; thisLen <= maxLength; thisLen++) {
 			pathCounts[thisLen] = {};
-			for(var vertex in vertexSet) {
+			for(var vertexName in vertexSet) {
+				var vertex = vertexSet[vertexName];
 				var count = 0;
-				var edges = vertexSet[vertex].getEdges();
+				var edges =	vertex.getEdges();
 				for(var i = 0; i < edges.length; i++) {
 					var edgeLen = useWeights ? edges[i].getWeight() : 1;
 					var edgeDest = edges[i].getDest();
@@ -201,9 +214,11 @@
 				pathCounts[thisLen][vertex] = count;
 			}
 		}
+
+		//Subtract out path of length 0 and return
 		return pathCounts[maxLength][startVertex] -
-				(startVertex == endVertex ? 1 : 0); //Subtract out path of
-													//length 0
+				((!exactLength || (maxLength == 0)) &&
+					(startVertex == endVertex) ? 1 : 0);
 	}
 })(
 	//If we are in a node.js like environment, we should put the functions in

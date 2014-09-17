@@ -37,7 +37,7 @@ describe("Graph Funs", function() {
 		});
 		it("should get the correct answer to question 7", function() {
 			assert.equal(
-				GraphFuns.numPaths(graph.C, graph.C, 4, true, false, graph),
+				GraphFuns.numPaths(graph.A, graph.C, 4, true, false, graph),
 			3); 
 		});
 		it("should get the correct answer to question 8", function() {
@@ -48,7 +48,7 @@ describe("Graph Funs", function() {
 		});
 		it("should get the correct answer to question 10", function() {
 			assert.equal(
-				GraphFuns.numPaths(graph.C, graph.C, 30, false, true, graph),
+				GraphFuns.numPaths(graph.C, graph.C, 29, false, true, graph),
 			7); 
 		});
 	});
