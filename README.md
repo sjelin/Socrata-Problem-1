@@ -1,4 +1,26 @@
-The problem was stated as follows:
+Running the solution
+====================
+
+If you have node.js installed on the shell, you can run this from the
+command line as follows:
+	node driver.js [graph_description]
+
+So, for instance, you can run the sample input as follows:
+	node driver.js AB5 BC4 CD8 DC8 DE6 AD5 CE2 EB3 AE7
+
+If you don't have node.js you can solve the problem another way:
+	(1) Open up the JS console in your browser
+	(2) Feed it the contents of fibonacciHeap.js
+	(3) Feed it the contents of graphFuns.js
+	(4) Set window.socrata_input to the description of your graph
+	(5)	Feed it the contents of driver.js
+
+Note that node.js is very easy to install on a UNIX-like machine, so I
+personally would just install it if you haven't already
+
+
+The problem
+=============
 
 ```
 PROBLEM ONE: TRAINS 
@@ -43,6 +65,9 @@ Output #9: 9
 Output #10: 7 
 ```
 
+Discussion of Approach:
+======================
+
 There are four distinct categories of questions that this program must then
 answer:
 
@@ -50,11 +75,13 @@ answer:
 2.	What is the shortest distance between two points?
 3.	How many paths are there between two points using no more than N stops?
 4.	How many paths are there between two points of length no more than M?
+5.	How many paths are there between two points using exactly N stops?
 
 Category 1 problems are trivial.  Category 2 problems are a simple 
 application of Dijkstra's algorithm.  Category 3 problems are obviously just
-a special case of category 4 problems with the edge weight set to 1.  So
-category 4 problems are what are most interesting.
+a special case of category 4 problems with the edge weight set to 1.  Similar
+things can be said of category 5.  So category 4 problems are what are most
+interesting.
 
 The most intuitive way to approach problem 4 is as follows:
 
