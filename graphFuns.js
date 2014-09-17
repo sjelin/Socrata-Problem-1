@@ -104,6 +104,8 @@
 		//Do the measurement
 		var length = 0;
 		for(var i = 0, j = 1; j < path.length; j = (i = j) + 1) {
+			if(path[i] == null)
+				return null;
 			var edge = path[i].getEdgeTo(path[j]);
 			if(edge == null)
 				return null;
@@ -114,7 +116,7 @@
 	}
 
 	//A PriorityQueue for use in Dijkstra's algorithmn
-	var PriorityQueue = typeof FibonacciHeap == "object" ? FibonacciHeap :
+	var PriorityQueue = typeof FibonacciHeap != "undefined" ? FibonacciHeap :
 						require("./fibonacciHeap.js");
 
 	/**	Computes the distance between two nodes in a graph.  Assumes no
