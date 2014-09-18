@@ -25,55 +25,54 @@ var GraphFuns = typeof GraphFuns != "undefined" ? GraphFuns :
 				require("./graphFuns.js");
 
 var graph = GraphFuns.parseGraph.apply(GraphFuns,
-				typeof process == "object" ? process.argv.slice(1) :
+				typeof process == "object" ? process.argv.slice(2) :
 					Array.isArray(window.socrata_input) ? 
 						window.socrata_input : [window.socrata_input]);
 var noRoute = "NO SUCH ROUTE";
-var noVertex = "NO SUCH VERTEX IN GRAPH"
 
 //Question 1
 var answer = GraphFuns.measurePath(graph, ["A", "B", "C"]);
 console.log(answer == null ? noRoute : answer);
 
 //Question 2
-var answer = GraphFuns.measurePath(graph, ["A", "D"]);
+answer = GraphFuns.measurePath(graph, ["A", "D"]);
 console.log(answer == null ? noRoute : answer);
 
 //Question 3
-var answer = GraphFuns.measurePath(graph, ["A", "D", "C"]);
+answer = GraphFuns.measurePath(graph, ["A", "D", "C"]);
 console.log(answer == null ? noRoute : answer);
 
 //Question 4
-var answer = GraphFuns.measurePath(graph, ["A", "E", "B", "C", "D"]);
+answer = GraphFuns.measurePath(graph, ["A", "E", "B", "C", "D"]);
 console.log(answer == null ? noRoute : answer);
 
 //Question 5
-var answer = GraphFuns.measurePath(graph, ["A","E","D"]);
+answer = GraphFuns.measurePath(graph, ["A","E","D"]);
 console.log(answer == null ? noRoute : answer);
 
 //Question 6
-var answer =	graph.C == null ? null :
+answer =	graph.C == null ? null :
 				GraphFuns.numPaths(graph.C, graph.C, 3, false, false, graph)
 console.log(answer == null ? 0 : answer);
 
 //Question 7
-var answer =	graph.C == null ? null :
-				graph.A == null ? null :
-				GraphFuns.numPaths(graph.A, graph.C, 4, true, false, graph)
+answer =	graph.C == null ? null :
+			graph.A == null ? null :
+			GraphFuns.numPaths(graph.A, graph.C, 4, true, false, graph)
 console.log(answer == null ? 0 : answer);
 
 //Question 8
-var answer =	graph.A == null ? null :
-				graph.C == null ? null :
-				GraphFuns.getDistance(graph.A, graph.C);
+answer =	graph.A == null ? null :
+			graph.C == null ? null :
+			GraphFuns.getDistance(graph.A, graph.C);
 console.log(answer == null ? noRoute : answer);
 
 //Question 9 
-var answer =	graph.B == null ? null :
-				GraphFuns.getDistance(graph.B, graph.B);
+answer =	graph.B == null ? null :
+			GraphFuns.getDistance(graph.B, graph.B);
 console.log(answer == null ? noRoute : answer);
 
 //Question 10
-var answer =	graph.C == null ? null :
-				GraphFuns.numPaths(graph.C, graph.C, 29, false, true, graph);
+answer =	graph.C == null ? null :
+			GraphFuns.numPaths(graph.C, graph.C, 29, false, true, graph);
 console.log(answer == null ? 0 : answer);

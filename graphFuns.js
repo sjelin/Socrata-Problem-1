@@ -64,7 +64,7 @@
 					var v1 = edgeStr[0];
 					var v2 = edgeStr[1];
 					var weight = edgeStr.slice(2);
-					if(weight.match(/[0-9]/) == null)
+					if(weight.match(/^-?[0-9]*$/) == null)
 						throw new TypeError("Edge weights must be integers");
 					weight = parseInt(weight);
 					if(weight <= 0)
