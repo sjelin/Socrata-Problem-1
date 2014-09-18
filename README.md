@@ -165,7 +165,7 @@ We can also eliminate the use of recursion when we take this approach:
 		}
 		return pathCounts[maxLength][startVertex];
 	}
-``
+```
 
 The downside here is that if the edges are long then only a small percentage
 of the `pathCounts` table is actually needed to compute the answer.  This
